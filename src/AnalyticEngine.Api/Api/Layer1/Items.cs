@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Timers;
 
 
-namespace AnalyticEngine.Api.MetricUpdate;
+namespace Layer1.Items;
 public enum ItemCategories
 {
     Weapon,
@@ -36,17 +36,3 @@ public static class NameValidator
 }
 
 // 2. Primary Constructor Record syntax (Modern C# shorthand)
-public record Request{
-    public string Type;
-    public long Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-    public double Amount;
-    Vector<ItemCategories> Categories;
-    Request(string ItemType,double ItemAmount,Vector<ItemCategories> Item_Categories)
-    {
-        long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        Type = NameValidator.CleanString(ItemType);
-        Amount = ItemAmount;
-        Categories = Item_Categories;
-        Timestamp = unixTimestamp;
-    }
-};

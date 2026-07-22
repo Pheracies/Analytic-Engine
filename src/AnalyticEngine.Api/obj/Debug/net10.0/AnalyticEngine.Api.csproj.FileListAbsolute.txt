@@ -1,3 +1,12 @@
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.csproj.AssemblyReference.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\rpswa.dswa.cache.json
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.AssemblyInfoInputs.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.AssemblyInfo.cs
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.csproj.CoreCompileInputs.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.MvcApplicationPartsAssemblyInfo.cs
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.MvcApplicationPartsAssemblyInfo.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.sourcelink.json
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\appsettings.Development.json
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\appsettings.json
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\AnalyticEngine.Api.staticwebassets.endpoints.json
@@ -8,14 +17,6 @@ E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\AnalyticEng
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\AnalyticEngine.Api.pdb
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\bin\Debug\net10.0\Microsoft.OpenApi.dll
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.csproj.AssemblyReference.cache
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\rpswa.dswa.cache.json
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.GeneratedMSBuildEditorConfig.editorconfig
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.AssemblyInfoInputs.cache
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.AssemblyInfo.cs
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.csproj.CoreCompileInputs.cache
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.MvcApplicationPartsAssemblyInfo.cs
-E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\AnalyticEngine.Api.MvcApplicationPartsAssemblyInfo.cache
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\rjimswa.dswa.cache.json
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 E:\Projects\Analytic Engine\src\AnalyticEngine.Api\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json

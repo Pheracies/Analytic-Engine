@@ -1,2 +1,0 @@
-namespace AnalyticEngine.Api.Types;
-
