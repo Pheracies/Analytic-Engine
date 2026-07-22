@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AnalyticEngine.Api/AnalyticEngine.Api.csproj" />
+    <Project Path="src/AnalyticEngine.Cli/AnalyticEngine.Cli.csproj" />
+  </Folder>
+</Solution>
