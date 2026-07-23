@@ -44,6 +44,8 @@ public class Request
 // 2. The RemoteEvent Hub (Handles incoming/outgoing SignalR events)
 public class RequestHub : Hub
 {
+    // Pheracies, 7/23/26
+    // Shared static session list to store requests in memory for the current execution
     private static readonly List<Request> requests = new();
 
     // Client calls this like a RemoteEvent: FireServer("SendRequest", request)
@@ -63,6 +65,8 @@ public class RequestHub : Hub
 
     public override async Task OnConnectedAsync()
     {
+        // Pheracies, 7/23/26
+        // Handle client connection lifecycle, log PID, and sync connection history
         string connectionId = Context.ConnectionId;
         Console.WriteLine($"[SignalR] 🟢 Client Connected! ConnectionId: {connectionId}");
         

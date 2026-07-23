@@ -16,28 +16,30 @@
   let categoryAccessory = $state(true);
   let categoryWealth = $state(false);
   let protocol = $state<'SignalR'>('SignalR');
-
+ const categoryOptions = [
+    { id: 0, name: 'Weapon' },
+    { id: 1, name: 'Accessory' },
+    { id: 2, name: 'Wealth' }
+  ];
+  // Pheracies, 7/23/26
+  // A single array holding the checked category IDs (1 = Accessory checked by default)
+  let selectedCategories = $state<number[]>([1]);
   // Helper log function
   function addLog(message: string) {
     const time = new Date().toLocaleTimeString();
     logs = [`[${time}] ${message}`, ...logs];
   }
 
-  // Handle request submission
   async function submitRequest(e: Event) {
     e.preventDefault();
-
-    // Map checkboxes to C# enum values (0 = Weapon, 1 = Accessory, 2 = Wealth)
-    const selectedCategories: number[] = [];
-    if (categoryWeapon) selectedCategories.push(0);
-    if (categoryAccessory) selectedCategories.push(1);
-    if (categoryWealth) selectedCategories.push(2);
 
     const payload: ItemRequest = {
       type: itemType,
       amount: itemAmount,
-      categories: selectedCategories,
+      categories: selectedCategories, // Already a clean number[] array!
     };
+    
+   
 
     addLog(`Sending request via ${protocol}: ${payload.type} (Qty: ${payload.amount})`);
 
@@ -46,6 +48,13 @@
     } catch (err: any) {
       addLog(`Error sending: ${err.message}`);
     }
+  }
+
+  // Pheracies, 7/23/26
+  // Removes a request from the local UI array by its index position
+  function removeRequest(indexToRemove: number) {
+    requests = requests.filter((_, index) => index !== indexToRemove);
+    addLog(`Deleted item locally at index ${indexToRemove}`);
   }
 
   // Initialize Connection on Mount
@@ -65,7 +74,8 @@
         }
       );
 
-      // Listen for system welcome messages!
+      // Pheracies, 7/23/26
+      // Listen for system welcome messages from C# and log them to the console feed
       conn.on('OnSystemMessage', (msg: string) => {
         addLog(`System: ${msg}`);
       });
@@ -100,11 +110,19 @@
         </div>
 
         <div class="field">
+          <!-- svelte-ignore a11y_label_has_associated_control -->
           <label>Categories:</label>
           <div class="checkbox-group">
-            <label><input type="checkbox" bind:checked={categoryWeapon} /> Weapon</label>
-            <label><input type="checkbox" bind:checked={categoryAccessory} /> Accessory</label>
-            <label><input type="checkbox" bind:checked={categoryWealth} /> Wealth</label>
+            {#each categoryOptions as cat}
+              <label>
+                <input 
+                  type="checkbox" 
+                  value={cat.id} 
+                  bind:group={selectedCategories} 
+                /> 
+                {cat.name}
+              </label>
+            {/each}
           </div>
         </div>
 
@@ -124,11 +142,16 @@
           <p class="empty-state">No real-time events received yet.</p>
         {:else}
           <div class="feed-list">
-            {#each requests as req}
+            {#each requests as req,index}
               <div class="feed-item">
                 <span class="timestamp">{req.timestamp ? new Date(req.timestamp).toLocaleTimeString() : 'N/A'}</span>
                 <span class="type">{req.type}</span>
-                <span class="amount">x{req.amount}</span>
+                <div class="amount-group">
+                  <span class="amount">x{req.amount}</span>
+                  <button class="delete-btn" onclick={() => removeRequest(index)} aria-label="Delete">
+                    &times;
+                  </button>
+                </div>
                 <div class="categories">
                   {#each req.categories as cat}
                     <span class="category-tag">{CATEGORY_MAP[cat] || 'Unknown'}</span>
