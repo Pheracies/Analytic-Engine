@@ -13,6 +13,7 @@ using Layer1.Items;
 
 namespace Layer2.Web;
 
+
 public enum Result
 {
     Success,
@@ -22,6 +23,7 @@ public enum Result
 // 1. DTO / Payload Class (Pure Data Model)
 public class Request
 {
+    
     public string Type { get; set; } = string.Empty;
     public long Timestamp { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     public int Amount { get; set; }
@@ -42,35 +44,45 @@ public class Request
 // 2. The RemoteEvent Hub (Handles incoming/outgoing SignalR events)
 public class RequestHub : Hub
 {
+    private static readonly List<Request> requests = new();
+
     // Client calls this like a RemoteEvent: FireServer("SendRequest", request)
     public async Task SendRequest(Request req)
     {
         Console.WriteLine($"[SignalR] Received request for {req.Type} (Amount: {req.Amount})");
+        
+        req.Type = ItemValidator.CleanString(req.Type);
+        req.Amount = Math.Clamp(req.Amount, 1, 3000);
 
-        // Broadcast to all clients (RemoteEvent:FireAllClients)
+        // Save to our static list
+        requests.Add(req);
+
+        // Broadcast to all clients
         await Clients.All.SendAsync("OnRequestReceived", req);
     }
-     public override async Task OnConnectedAsync()
+
+    public override async Task OnConnectedAsync()
     {
-        // You can get the client's unique Connection ID using 'Context'
         string connectionId = Context.ConnectionId;
-        
         Console.WriteLine($"[SignalR] 🟢 Client Connected! ConnectionId: {connectionId}");
         
-        // Example action: Send a direct greeting only to the client that just connected
+        // Send a welcome message only to the client that just connected
         await Clients.Caller.SendAsync("OnSystemMessage", $"Welcome! Your session ID is {connectionId}");
         
-        // MUST call the base method at the end so SignalR registers the connection!
+        // Loop through the history and send it to the caller
+        foreach (var request in requests)
+        {
+            await Clients.Caller.SendAsync("OnRequestReceived", request);
+        }
+        
         await base.OnConnectedAsync();
     }
-    // 2. Fires when a client disconnects!
+
+    // Fires when a client disconnects!
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         string connectionId = Context.ConnectionId;
-        
         Console.WriteLine($"[SignalR] 🔴 Client Disconnected: {connectionId}. Reason: {exception?.Message ?? "None"}");
-        
-        // MUST call the base method at the end
         await base.OnDisconnectedAsync(exception);
     }
 }

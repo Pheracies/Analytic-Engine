@@ -52,7 +52,7 @@
   onMount(async () => {
     addLog('Initializing SignalR connection...');
     try {
-      await startSignalR(
+      const conn = await startSignalR(
         (newReq: ItemRequest) => {
           // This callback runs when the server broadcasts an event!
           requests = [newReq, ...requests];
@@ -64,6 +64,11 @@
           addLog(`Connection state changed to: ${newState}`);
         }
       );
+
+      // Listen for system welcome messages!
+      conn.on('OnSystemMessage', (msg: string) => {
+        addLog(`System: ${msg}`);
+      });
     } catch (err: any) {
       addLog(`Initialization failed: ${err.message}`);
     }
