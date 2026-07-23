@@ -31,4 +31,4 @@ newWebpage.Send(newReq);
 // Keeps the app alive forever asynchronously without consuming CPU or blocking threads!
 await tcs.Task;
 
-Console.WriteLine("Shutting down cleanly.");
+Console.WriteLine("Shutting down cleanly at " + DateTime.Now.ToLocalTime());

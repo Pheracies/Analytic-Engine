@@ -16,15 +16,7 @@ public class Webpage
 {
     public void ParseRequest(ref Request req)
     {
-        ref var Amnt = ref req.Amount;
-        if (Amnt is int)
-        {
-            
-        } 
-        else
-        {
-            throw new InvalidCastException("Amount can't be cast to int");
-        }
+        ref int Amnt = ref req.Amount;
         Amnt = Math.Clamp(Amnt,1,3 * (int)Math.Pow(10,3));
         
 
