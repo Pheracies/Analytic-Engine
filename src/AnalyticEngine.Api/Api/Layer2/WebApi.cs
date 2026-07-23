@@ -16,11 +16,7 @@ public class Webpage
 {
     public void ParseRequest(ref Request req)
     {
-        ref int Amnt = ref req.Amount;
-        Amnt = Math.Clamp(Amnt,1,3 * (int)Math.Pow(10,3));
-        
-
-        req.Amount = Amnt;
+        req.Amount = Math.Clamp(req.Amount,1,3 * (int)Math.Pow(10,3));
         
     }
 
