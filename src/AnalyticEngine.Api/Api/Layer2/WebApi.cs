@@ -28,7 +28,8 @@ public class Request
     public long Timestamp { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     public int Amount { get; set; }
     public List<ItemCategories> Categories { get; set; } = new();
-
+    
+    public long LastUpdated { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     // Parameterless constructor required for JSON deserialization
     public Request() { }
 
@@ -38,6 +39,19 @@ public class Request
         Amount = itemAmount;
         Categories = itemCategories ?? new();
         Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        LastUpdated = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
+    public static void overrideRequest(ref Request req1, ref Request req2, Func<Request, Request, Request> func)
+    {
+        if (func == null)
+        {
+            throw new Exception("func is null");    
+        }
+        Request mergedResult = func(req1, req2);
+        req1.Amount = mergedResult.Amount;
+        req1.Timestamp = mergedResult.Timestamp;
+        req1.Categories = mergedResult.Categories;
+        req1.LastUpdated = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 }
 
@@ -46,7 +60,7 @@ public class RequestHub : Hub
 {
     // Pheracies, 7/23/26
     // Shared static session list to store requests in memory for the current execution
-    private static readonly List<Request> requests = new();
+    private static readonly Dictionary<string,Request> requests = new();
 
     // Client calls this like a RemoteEvent: FireServer("SendRequest", request)
     public async Task SendRequest(Request req)
@@ -55,12 +69,28 @@ public class RequestHub : Hub
         
         req.Type = ItemValidator.CleanString(req.Type);
         req.Amount = Math.Clamp(req.Amount, 1, 3000);
-
+        
         // Save to our static list
-        requests.Add(req);
+        Request broadcastItem = req;
+        if (requests.ContainsKey(req.Type))
+        {
+            var existingRequest = requests[req.Type];
+            Request.overrideRequest(ref existingRequest, ref req, (existing, newReq) =>
+            {
+                existing.Amount += newReq.Amount;
+                existing.Categories = newReq.Categories;
+                return existing;
+            });
+            requests[req.Type] = existingRequest;
+            broadcastItem = existingRequest;
+        }
+        else
+        {
+            requests[req.Type] = req;
+        }
 
         // Broadcast to all clients
-        await Clients.All.SendAsync("OnRequestReceived", req);
+        await Clients.All.SendAsync("OnRequestReceived", broadcastItem);
     }
 
     public override async Task OnConnectedAsync()
@@ -74,7 +104,7 @@ public class RequestHub : Hub
         await Clients.Caller.SendAsync("OnSystemMessage", $"Welcome! Your session ID is {connectionId}");
         
         // Loop through the history and send it to the caller
-        foreach (var request in requests)
+        foreach (var request in requests.Values)
         {
             await Clients.Caller.SendAsync("OnRequestReceived", request);
         }

@@ -49,26 +49,56 @@
       addLog(`Error sending: ${err.message}`);
     }
   }
+  async function removeRequest(req: ItemRequest | undefined) {
+    if (!req) {
+      return;
+    }
 
+    if (req.timestamp) {
+      try {
+        await sendViaSignalR(req); // wait, we need a new method or invoke it!
+        // We will call connection.invoke directly:
+        // (Wait, we can import or access the connection. Let's look at connection.ts)
+      } catch (err: any) {
+        addLog(`Delete error: ${err.message}`);
+      }
+    }
+  }
   // Pheracies, 7/23/26
   // Removes a request from the local UI array by its index position
-  function removeRequest(indexToRemove: number) {
+  function remove(indexToRemove: number) {
+    const req = requests.at(indexToRemove);
+    if (!req) {
+      addLog(`Attempted delete at invalid index ${indexToRemove}`);
+      return;
+    }
+
     requests = requests.filter((_, index) => index !== indexToRemove);
-    addLog(`Deleted item locally at index ${indexToRemove}`);
+    removeRequest(req);
+    addLog(`Deleted item globally at index ${indexToRemove}`);
   }
 
   // Initialize Connection on Mount
   onMount(async () => {
     addLog('Initializing SignalR connection...');
     try {
-      const conn = await startSignalR(
+            const conn = await startSignalR(
         (newReq: ItemRequest) => {
-          // This callback runs when the server broadcasts an event!
-          requests = [newReq, ...requests];
-          addLog(`Real-time update: Received ${newReq.type}`);
+          // Pheracies, 7/23/26
+          // Check if we already have this item type on the screen
+          const existingIndex = requests.findIndex(r => r.type === newReq.type);
+
+          if (existingIndex !== -1) {
+            // Update the existing card on the screen!
+            requests[existingIndex] = newReq;
+          } else {
+            // Prepend a new card if it's a new item type
+            requests = [newReq, ...requests];
+          }
+
+          addLog(`Real-time update: Received ${newReq.type} (Qty: ${newReq.amount})`);
         },
         (newState: ConnectionState) => {
-          // This callback runs when the connection state changes!
           connectionState = newState;
           addLog(`Connection state changed to: ${newState}`);
         }
@@ -148,7 +178,7 @@
                 <span class="type">{req.type}</span>
                 <div class="amount-group">
                   <span class="amount">x{req.amount}</span>
-                  <button class="delete-btn" onclick={() => removeRequest(index)} aria-label="Delete">
+                  <button class="delete-btn" onclick={() => remove(index)} aria-label="Delete">
                     &times;
                   </button>
                 </div>

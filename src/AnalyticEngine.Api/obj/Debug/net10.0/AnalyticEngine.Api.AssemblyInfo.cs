@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnalyticEngine.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6fbcffd08083d30613e90de5ae6b33f20a18e6c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23653db802380ecb37d44cceb126dee92d8e7600")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnalyticEngine.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnalyticEngine.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
