@@ -1,0 +1,15 @@
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\bin\Debug\net10.0\AnalyticEngine.Cli.exe
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\bin\Debug\net10.0\AnalyticEngine.Cli.deps.json
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\bin\Debug\net10.0\AnalyticEngine.Cli.runtimeconfig.json
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\bin\Debug\net10.0\AnalyticEngine.Cli.dll
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\bin\Debug\net10.0\AnalyticEngine.Cli.pdb
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.AssemblyInfoInputs.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.AssemblyInfo.cs
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.csproj.CoreCompileInputs.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.sourcelink.json
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.dll
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\refint\AnalyticEngine.Cli.dll
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.pdb
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\AnalyticEngine.Cli.genruntimeconfig.cache
+E:\Projects\Analytic Engine\src\AnalyticEngine.Cli\obj\Debug\net10.0\ref\AnalyticEngine.Cli.dll

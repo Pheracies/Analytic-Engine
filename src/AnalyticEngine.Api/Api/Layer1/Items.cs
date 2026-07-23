@@ -13,7 +13,7 @@ public enum ItemCategories
 }
 
 // 1. Static list/set for disallowed names
-public static class NameValidator
+public static class ItemValidator
 {
     private static readonly HashSet<string> DisallowedNames = new()
     {
@@ -23,15 +23,43 @@ public static class NameValidator
     };
 
     // Clean string parser method
-    public static string CleanString(string item)
+           public static string CleanString(string item)
     {
-        // Check if disallowed or explicitly 'GOD'
-        if (DisallowedNames.Contains(item.ToUpper()))
+        // 1. Safe null/empty check first!
+        if (string.IsNullOrWhiteSpace(item))
         {
-            return "UNKNOWN"; // Fallback value
+            return "UNKNOWN";
         }
 
-        return item;
+        // 2. Perform operations safely after verifying item is not null
+        string upperItem = item.Trim().ToUpper();
+        bool valid = true;
+
+        // 3. Admin names check
+        if (DisallowedNames.Contains(upperItem))
+        {
+            valid = false;
+        }
+
+        // 4. Basic XSS / HTML tags check
+        if (upperItem.Contains("<SCRIPT") || upperItem.Contains("JAVASCRIPT:"))
+        {
+            valid = false;
+        }
+
+        // 5. Apply fallback if invalid, otherwise trim and check length
+        if (!valid)
+        {
+            return "UNKNOWN";
+        }
+
+        // 6. Enforce length limit of 100 characters
+        if (item.Length > 100)
+        {
+            item = item.Substring(0, 100);
+        }
+
+        return item.Trim();
     }
 }
 

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "AnalyticEngine.Cli/1.0.0": {
+        "runtime": {
+          "AnalyticEngine.Cli.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AnalyticEngine.Cli/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
