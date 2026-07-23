@@ -330,7 +330,7 @@ button:disabled {
 .feed-item .amount {
   font-family: monospace;
   font-weight: 700;
-  color: var(--accent-purple);
+  color: var(--text-primary);
   background: var(--accent-purple-glow);
   padding: 2px 8px;
   border-radius: 4px;
