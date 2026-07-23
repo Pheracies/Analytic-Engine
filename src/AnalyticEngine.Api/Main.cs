@@ -12,6 +12,7 @@ var tcs = new TaskCompletionSource();
 AppDomain.CurrentDomain.ProcessExit += (s, e) => tcs.TrySetResult();
 Console.CancelKeyPress += (sender, receiver) =>
 {
+    
     receiver.Cancel = true; // Prevent abrupt termination
     tcs.TrySetResult();
 };

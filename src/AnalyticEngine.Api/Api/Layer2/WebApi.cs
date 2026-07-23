@@ -35,8 +35,10 @@ public class Webpage
     public Result Send(Request req)
     {
         ParseRequest(ref req);
+        DateTimeOffset reqDate = DateTimeOffset.FromUnixTimeMilliseconds(req.Timestamp);
         //Do this sometime
-        Console.WriteLine("Sending " + req.Type + " over");
+        Console.WriteLine("Sending " + req.Type + "(Amount: " + req.Amount.ToString() + ")" + " over");
+        Console.WriteLine("Request Sent: " + reqDate.LocalDateTime);
         Console.Write("ItemCategories: ");
         foreach (var category in req.Categories)
         {
@@ -52,7 +54,7 @@ public class Request{
     public List<ItemCategories> Categories;
     public Request(string ItemType,int ItemAmount,List<ItemCategories> Item_Categories)
     {
-        long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         Type = NameValidator.CleanString(ItemType);
         Amount = ItemAmount;
         Categories = Item_Categories;
