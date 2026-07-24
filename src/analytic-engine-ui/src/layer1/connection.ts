@@ -1,7 +1,9 @@
 import * as signalR from '@microsoft/signalr';
 import type { ItemRequest, ConnectionState } from '../layer0/types';
 
-const BACKEND_URL = 'http://localhost:5000';
+// Pheracies, 7/23/26
+// Reads production URL from environment variable, falling back to localhost
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 let connection: signalR.HubConnection | null = null;
 

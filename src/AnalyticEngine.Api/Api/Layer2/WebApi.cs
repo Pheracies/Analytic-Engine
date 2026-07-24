@@ -155,14 +155,18 @@ public class Webpage
 
         builder.Services.AddCors(options =>
         {
-            
+            // Pheracies, 7/23/26
+            // Dynamically authorize localhost and any Vercel domain
             options.AddDefaultPolicy(policy =>
             {
-                policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173",
-                "https://analytic-engine-7sd9dl75s-destiny-studios.vercel.app/")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials(); // Required for SignalR
+                policy.SetIsOriginAllowed(origin =>
+                {
+                    var host = new Uri(origin).Host;
+                    return host == "localhost" || host == "127.0.0.1" || host.EndsWith(".vercel.app");
+                })
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials(); // Required for SignalR WebSockets
             });
         });
         // MUST register SignalR services!
