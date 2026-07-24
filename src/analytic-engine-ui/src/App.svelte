@@ -19,7 +19,8 @@
  const categoryOptions = [
     { id: 0, name: 'Weapon' },
     { id: 1, name: 'Accessory' },
-    { id: 2, name: 'Wealth' }
+    { id: 2, name: 'Wealth' },
+    {id: 3, name: 'Utility'}
   ];
   // Pheracies, 7/23/26
   // A single array holding the checked category IDs (1 = Accessory checked by default)
@@ -85,8 +86,6 @@
     try {
             const conn = await startSignalR(
         (newReq: ItemRequest) => {
-          // Pheracies, 7/23/26
-          // Check if we already have this item type on the screen
           const existingIndex = requests.findIndex(r => r.type === newReq.type);
 
           if (existingIndex !== -1) {

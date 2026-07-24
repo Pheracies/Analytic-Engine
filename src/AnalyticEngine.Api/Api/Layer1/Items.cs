@@ -10,6 +10,7 @@ public enum ItemCategories
     Weapon,
     Accessory,
     Wealth,
+    Utility
 }
 
 // 1. Static list/set for disallowed names
