@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { startSignalR, sendViaSignalR, sendViaRest } from './layer1/connection';
   import type { ItemRequest, ConnectionState } from './layer0/types';
-  import { CATEGORY_MAP } from './layer0/types';
+  import { actionType, CATEGORY_MAP } from './layer0/types';
 
   // 1. Reactive states (Svelte 5 Runes)
   let connectionState = $state<ConnectionState>('Disconnected');
@@ -37,6 +37,7 @@
       type: itemType,
       amount: itemAmount,
       categories: selectedCategories, // Already a clean number[] array!
+      actionType: actionType.Add
     };
     
    
@@ -72,7 +73,7 @@
       addLog(`Attempted delete at invalid index ${indexToRemove}`);
       return;
     }
-
+    req.actionType = actionType.Delete;
     requests = requests.filter((_, index) => index !== indexToRemove);
     removeRequest(req);
     addLog(`Deleted item globally at index ${indexToRemove}`);

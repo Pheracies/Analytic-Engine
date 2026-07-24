@@ -19,7 +19,11 @@ public enum Result
     Success,
     Fail
 }
-
+public enum ActionType
+{
+    Add,
+    Delete
+}
 // 1. DTO / Payload Class (Pure Data Model)
 public class Request
 {
@@ -27,19 +31,21 @@ public class Request
     public string Type { get; set; } = string.Empty;
     public long Timestamp { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     public int Amount { get; set; }
+    public ActionType actionType {get; set; } = ActionType.Add;
     public List<ItemCategories> Categories { get; set; } = new();
     
     public long LastUpdated { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     // Parameterless constructor required for JSON deserialization
     public Request() { }
 
-    public Request(string itemType, int itemAmount, List<ItemCategories> itemCategories)
+    public Request(string itemType, int itemAmount, List<ItemCategories> itemCategories, ActionType? itemActionType)
     {
         Type = ItemValidator.CleanString(itemType);
         Amount = itemAmount;
         Categories = itemCategories ?? new();
         Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         LastUpdated = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        actionType = itemActionType ?? ActionType.Add;
     }
     public static void overrideRequest(ref Request req1, ref Request req2, Func<Request, Request, Request> func)
     {
@@ -66,8 +72,14 @@ public class RequestHub : Hub
     public async Task SendRequest(Request req)
     {
         Console.WriteLine($"[SignalR] Received request for {req.Type} (Amount: {req.Amount})");
-        
+
         req.Type = ItemValidator.CleanString(req.Type);
+        if (req.actionType == ActionType.Delete)
+        {
+            requests.Remove(req.Type);
+            return;
+        }
+
         req.Amount = Math.Clamp(req.Amount, 1, 3000);
         
         // Save to our static list
@@ -131,6 +143,7 @@ public class Webpage
 
     public Result Send(Request req)
     {
+        
         ParseRequest(ref req);
         DateTimeOffset reqDate = DateTimeOffset.FromUnixTimeMilliseconds(req.Timestamp);
 
@@ -155,8 +168,6 @@ public class Webpage
 
         builder.Services.AddCors(options =>
         {
-            // Pheracies, 7/23/26
-            // Dynamically authorize localhost and any Vercel domain
             options.AddDefaultPolicy(policy =>
             {
                 policy.SetIsOriginAllowed(origin =>

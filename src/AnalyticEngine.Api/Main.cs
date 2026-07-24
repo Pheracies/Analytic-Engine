@@ -25,7 +25,7 @@ newList.Add(ItemCategories.Wealth);
 
 Webpage newWebpage = new();
 
-Request newReq = new Request("Gold Sword",1, newList);
+Request newReq = new Request("Gold Sword",1, newList,ActionType.Add);
 newWebpage.Send(newReq);
 
 // Keeps the app alive forever asynchronously without consuming CPU or blocking threads!
