@@ -14,6 +14,7 @@ export const CATEGORY_MAP: Record<number, string> = {
   0: 'Weapon',
   1: 'Accessory',
   2: 'Wealth',
+  3: 'Utility'
 };
 
 // Help track connection states
