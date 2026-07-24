@@ -159,7 +159,7 @@ public class Webpage
             options.AddDefaultPolicy(policy =>
             {
                 policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173",
-                "https://analytic-engine.vercel.app/")
+                "https://analytic-engine-7sd9dl75s-destiny-studios.vercel.app/")
                       .AllowAnyHeader()
                       .AllowAnyMethod()
                       .AllowCredentials(); // Required for SignalR
